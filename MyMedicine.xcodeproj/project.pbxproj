@@ -15,7 +15,6 @@
 		955597C52863463300A88E60 /* MyMedicineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597C42863463300A88E60 /* MyMedicineTests.swift */; };
 		955597CF2863463300A88E60 /* MyMedicineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597CE2863463300A88E60 /* MyMedicineUITests.swift */; };
 		955597D12863463300A88E60 /* MyMedicineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597D02863463300A88E60 /* MyMedicineUITestsLaunchTests.swift */; };
-		955597DE286349A600A88E60 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597DD286349A600A88E60 /* RegistrationViewController.swift */; };
 		955597E028634A6000A88E60 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597DF28634A6000A88E60 /* ProfileViewController.swift */; };
 		955597E228634A6F00A88E60 /* TestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E128634A6F00A88E60 /* TestsViewController.swift */; };
 		955597E428634A8000A88E60 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E328634A7F00A88E60 /* HistoryViewController.swift */; };
@@ -53,7 +52,6 @@
 		955597CA2863463300A88E60 /* MyMedicineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyMedicineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		955597CE2863463300A88E60 /* MyMedicineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMedicineUITests.swift; sourceTree = "<group>"; };
 		955597D02863463300A88E60 /* MyMedicineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMedicineUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		955597DD286349A600A88E60 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		955597DF28634A6000A88E60 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		955597E128634A6F00A88E60 /* TestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsViewController.swift; sourceTree = "<group>"; };
 		955597E328634A7F00A88E60 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			children = (
 				955597AA2863463200A88E60 /* AppDelegate.swift */,
 				955597AC2863463200A88E60 /* SceneDelegate.swift */,
-				955597DD286349A600A88E60 /* RegistrationViewController.swift */,
 				955597E728634B4600A88E60 /* MainViewController.swift */,
 				955597DF28634A6000A88E60 /* ProfileViewController.swift */,
 				955597E128634A6F00A88E60 /* TestsViewController.swift */,
@@ -279,7 +276,6 @@
 				955597B52863463200A88E60 /* MyMedicine.xcdatamodeld in Sources */,
 				955597E428634A8000A88E60 /* HistoryViewController.swift in Sources */,
 				955597E828634B4600A88E60 /* MainViewController.swift in Sources */,
-				955597DE286349A600A88E60 /* RegistrationViewController.swift in Sources */,
 				955597E628634A8F00A88E60 /* DoctorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
