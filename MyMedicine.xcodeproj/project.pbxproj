@@ -9,14 +9,18 @@
 /* Begin PBXBuildFile section */
 		955597AB2863463200A88E60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597AA2863463200A88E60 /* AppDelegate.swift */; };
 		955597AD2863463200A88E60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597AC2863463200A88E60 /* SceneDelegate.swift */; };
-		955597AF2863463200A88E60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597AE2863463200A88E60 /* ViewController.swift */; };
-		955597B22863463200A88E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 955597B02863463200A88E60 /* Main.storyboard */; };
 		955597B52863463200A88E60 /* MyMedicine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 955597B32863463200A88E60 /* MyMedicine.xcdatamodeld */; };
 		955597B72863463300A88E60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 955597B62863463300A88E60 /* Assets.xcassets */; };
 		955597BA2863463300A88E60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 955597B82863463300A88E60 /* LaunchScreen.storyboard */; };
 		955597C52863463300A88E60 /* MyMedicineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597C42863463300A88E60 /* MyMedicineTests.swift */; };
 		955597CF2863463300A88E60 /* MyMedicineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597CE2863463300A88E60 /* MyMedicineUITests.swift */; };
 		955597D12863463300A88E60 /* MyMedicineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597D02863463300A88E60 /* MyMedicineUITestsLaunchTests.swift */; };
+		955597DE286349A600A88E60 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597DD286349A600A88E60 /* RegistrationViewController.swift */; };
+		955597E028634A6000A88E60 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597DF28634A6000A88E60 /* ProfileViewController.swift */; };
+		955597E228634A6F00A88E60 /* TestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E128634A6F00A88E60 /* TestsViewController.swift */; };
+		955597E428634A8000A88E60 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E328634A7F00A88E60 /* HistoryViewController.swift */; };
+		955597E628634A8F00A88E60 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E528634A8F00A88E60 /* DoctorViewController.swift */; };
+		955597E828634B4600A88E60 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597E728634B4600A88E60 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +44,6 @@
 		955597A72863463200A88E60 /* MyMedicine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMedicine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		955597AA2863463200A88E60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		955597AC2863463200A88E60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		955597AE2863463200A88E60 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		955597B12863463200A88E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		955597B42863463200A88E60 /* MyMedicine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyMedicine.xcdatamodel; sourceTree = "<group>"; };
 		955597B62863463300A88E60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		955597B92863463300A88E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,12 @@
 		955597CA2863463300A88E60 /* MyMedicineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyMedicineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		955597CE2863463300A88E60 /* MyMedicineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMedicineUITests.swift; sourceTree = "<group>"; };
 		955597D02863463300A88E60 /* MyMedicineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMedicineUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		955597DD286349A600A88E60 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		955597DF28634A6000A88E60 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		955597E128634A6F00A88E60 /* TestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsViewController.swift; sourceTree = "<group>"; };
+		955597E328634A7F00A88E60 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		955597E528634A8F00A88E60 /* DoctorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
+		955597E728634B4600A88E60 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +111,12 @@
 			children = (
 				955597AA2863463200A88E60 /* AppDelegate.swift */,
 				955597AC2863463200A88E60 /* SceneDelegate.swift */,
-				955597AE2863463200A88E60 /* ViewController.swift */,
-				955597B02863463200A88E60 /* Main.storyboard */,
+				955597DD286349A600A88E60 /* RegistrationViewController.swift */,
+				955597E728634B4600A88E60 /* MainViewController.swift */,
+				955597DF28634A6000A88E60 /* ProfileViewController.swift */,
+				955597E128634A6F00A88E60 /* TestsViewController.swift */,
+				955597E328634A7F00A88E60 /* HistoryViewController.swift */,
+				955597E528634A8F00A88E60 /* DoctorViewController.swift */,
 				955597B62863463300A88E60 /* Assets.xcassets */,
 				955597B82863463300A88E60 /* LaunchScreen.storyboard */,
 				955597BB2863463300A88E60 /* Info.plist */,
@@ -236,7 +248,6 @@
 			files = (
 				955597BA2863463300A88E60 /* LaunchScreen.storyboard in Resources */,
 				955597B72863463300A88E60 /* Assets.xcassets in Resources */,
-				955597B22863463200A88E60 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +272,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				955597AF2863463200A88E60 /* ViewController.swift in Sources */,
+				955597E228634A6F00A88E60 /* TestsViewController.swift in Sources */,
 				955597AB2863463200A88E60 /* AppDelegate.swift in Sources */,
 				955597AD2863463200A88E60 /* SceneDelegate.swift in Sources */,
+				955597E028634A6000A88E60 /* ProfileViewController.swift in Sources */,
 				955597B52863463200A88E60 /* MyMedicine.xcdatamodeld in Sources */,
+				955597E428634A8000A88E60 /* HistoryViewController.swift in Sources */,
+				955597E828634B4600A88E60 /* MainViewController.swift in Sources */,
+				955597DE286349A600A88E60 /* RegistrationViewController.swift in Sources */,
+				955597E628634A8F00A88E60 /* DoctorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,14 +317,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		955597B02863463200A88E60 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				955597B12863463200A88E60 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		955597B82863463300A88E60 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -446,7 +454,6 @@
 				INFOPLIST_FILE = MyMedicine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,7 +481,6 @@
 				INFOPLIST_FILE = MyMedicine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
