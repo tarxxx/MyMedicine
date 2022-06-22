@@ -18,21 +18,21 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let profileTab = ProfileViewController()
+        let profileTab = UINavigationController(rootViewController: ProfileViewController()) 
         let profileTabBarItem = UITabBarItem(title: "Профиль", image: UIImage(named: "User.png"), tag: 0)
         profileTab.tabBarItem = profileTabBarItem
         
-        let testsTab = TestsViewController()
+        let testsTab = UINavigationController(rootViewController: TestsViewController())
         let testsTabBarItem = UITabBarItem(title: "Тест", image: UIImage(named: "Health.png"), tag: 1)
         testsTab.tabBarItem = testsTabBarItem
         
         
-        let historyTab = HistoryViewController()
+        let historyTab = UINavigationController(rootViewController: HistoryViewController())
         let historyTabBarItem = UITabBarItem(title: "История", image: UIImage(named: "Time.png"), tag: 2)
         historyTab.tabBarItem = historyTabBarItem
         
         
-        let doctorTab = DoctorViewController()
+        let doctorTab = UINavigationController(rootViewController: DoctorViewController()) 
         let doctorTabBarItem = UITabBarItem(title: "Врач", image: UIImage(named: "Support"), tag: 3)
         doctorTab.tabBarItem = doctorTabBarItem
         
