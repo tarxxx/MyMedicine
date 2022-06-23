@@ -29,6 +29,10 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
      // Pass the selected object to the new view controller.
      }
      */
+    
+    
+    
+    
 }
     extension MainViewController {
         
@@ -38,7 +42,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         
         private func setupVC() {
             let profileTab = UINavigationController(rootViewController: ProfileViewController())
-            let profileTabBarItem = UITabBarItem(title: "Профиль", image: UIImage(named: "User.png"), tag: 0)
+            let profileTabBarItem = UITabBarItem(title: "Профиль", image: UIImage(named: "User,Profile.svg"), tag: 0)
             profileTab.tabBarItem = profileTabBarItem
             
             let testsTab = UINavigationController(rootViewController: TestsViewController())
@@ -55,6 +59,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             
             self.viewControllers = [profileTab, testsTab, historyTab, doctorTab]
         }
+        
+        
     }
 
 

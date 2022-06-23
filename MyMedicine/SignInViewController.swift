@@ -11,9 +11,28 @@ class SignInViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setConstraints()
+        button.addTarget(self, action: #selector(handlePresentingVC), for: .touchUpInside)
 
         // Do any additional setup after loading the view.
     }
+    var button: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+       return button
+   }()
+   
+   
+   
+   @objc func handlePresentingVC() {
+       let vc = MainViewController()
+       vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true, completion: nil)
+   }
+    
     
 
     /*
@@ -27,3 +46,16 @@ class SignInViewController: UIViewController {
     */
 
 }
+extension SignInViewController {
+    
+        
+        func setConstraints() {
+        view.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            button.heightAnchor.constraint(equalToConstant: 40),
+            button.widthAnchor.constraint(equalToConstant: 40)
+        ])
+        }
+    }
