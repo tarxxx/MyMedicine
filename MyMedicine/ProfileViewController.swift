@@ -7,30 +7,51 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+class ProfileViewController: MainViewController {
+    
+    var bigButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
         
-        title = "Профиль"
+        return button
+    }()
+    
+    override func viewDidLoad() {
+        bigButton.addTarget(self, action: #selector(presentingVC), for: .touchUpInside)
+        setConstraints()
+        
     }
     
-     
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
-    */
-
+    
+    @objc func presentingVC() {
+        
+        let vc = SignInViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
 }
 
 
+extension ProfileViewController {
     
+    func setConstraints() {
+        view.addSubview(bigButton)
+        NSLayoutConstraint.activate([
+            bigButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            bigButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            bigButton.heightAnchor.constraint(equalToConstant: 60),
+            bigButton.widthAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+}
+
 

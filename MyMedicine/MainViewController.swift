@@ -11,56 +11,53 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate = self
-        setupUI()
         
+        setupUI()
+    }
+    
+    @objc func printOk() {
+        print("ok")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupVC()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    
-    
-    
 }
+
+
     extension MainViewController {
         
         private func setupUI() {
             view.backgroundColor = .white
         }
         
-        private func setupVC() {
-            let profileTab = UINavigationController(rootViewController: ProfileViewController())
-            let profileTabBarItem = UITabBarItem(title: "Профиль", image: UIImage(named: "User,Profile.svg"), tag: 0)
-            profileTab.tabBarItem = profileTabBarItem
+         func setupVC() {
+             let profileVC = UINavigationController(rootViewController: ProfileViewController())
+             profileVC.topViewController?.navigationItem.title = "Профиль"
+             profileVC.tabBarItem.image = UIImage(named: "User.svg")
+             profileVC.tabBarItem.title = "Профиль"
+             
+             let testsVC = UINavigationController(rootViewController: TestsViewController())
+             testsVC.topViewController?.navigationItem.title = "Тест"
+             testsVC.tabBarItem.image = UIImage(named: "Health.svg")
+             testsVC.tabBarItem.title = "Тест"
+             
+             let historyVC = UINavigationController(rootViewController: HistoryViewController())
+             historyVC.topViewController?.navigationItem.title = "История"
+             historyVC.tabBarItem.image = UIImage(named: "History.svg")
+             historyVC.tabBarItem.title = "История"
+             
+             let doctorVC = UINavigationController(rootViewController: DoctorViewController())
+             doctorVC.topViewController?.navigationItem.title = "Врач"
+             doctorVC.tabBarItem.image = UIImage(named: "Support.svg")
+             doctorVC.tabBarItem.title = "Врач"
+
+            viewControllers = [profileVC, testsVC, historyVC, doctorVC]
             
-            let testsTab = UINavigationController(rootViewController: TestsViewController())
-            let testsTabBarItem = UITabBarItem(title: "Тест", image: UIImage(named: "Health.png"), tag: 1)
-            testsTab.tabBarItem = testsTabBarItem
-            
-            let historyTab = UINavigationController(rootViewController: HistoryViewController())
-            let historyTabBarItem = UITabBarItem(title: "История", image: UIImage(named: "Time.png"), tag: 2)
-            historyTab.tabBarItem = historyTabBarItem
-            
-            let doctorTab = UINavigationController(rootViewController: DoctorViewController())
-            let doctorTabBarItem = UITabBarItem(title: "Врач", image: UIImage(named: "Support"), tag: 3)
-            doctorTab.tabBarItem = doctorTabBarItem
-            
-            self.viewControllers = [profileTab, testsTab, historyTab, doctorTab]
+             
         }
-        
-        
     }
+
 
 

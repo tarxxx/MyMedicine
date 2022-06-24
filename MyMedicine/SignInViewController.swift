@@ -7,49 +7,39 @@
 
 import UIKit
 
-class SignInViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setConstraints()
-        button.addTarget(self, action: #selector(handlePresentingVC), for: .touchUpInside)
-
-        // Do any additional setup after loading the view.
-    }
+class SignInViewController: UIViewController, UITabBarControllerDelegate {
+    
     var button: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "trash"), for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = .blue
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
-       return button
-   }()
-   
-   
-   
-   @objc func handlePresentingVC() {
-       let vc = MainViewController()
-       vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true, completion: nil)
-   }
+        return button
+    }()
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setConstraints()
+        button.addTarget(self, action: #selector(handlePresentingVC), for: .touchUpInside)
     }
-    */
-
+    
+    
+    @objc func handlePresentingVC() {
+        
+        let pvc = ProfileViewController()
+        pvc.setupVC()
+        pvc.bigButton.isHidden = true
+        pvc.view.backgroundColor = .white
+        present(pvc, animated: true)
+    }
 }
+
 extension SignInViewController {
     
-        
-        func setConstraints() {
+    func setConstraints() {
         view.addSubview(button)
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
@@ -57,5 +47,5 @@ extension SignInViewController {
             button.heightAnchor.constraint(equalToConstant: 40),
             button.widthAnchor.constraint(equalToConstant: 40)
         ])
-        }
     }
+}
