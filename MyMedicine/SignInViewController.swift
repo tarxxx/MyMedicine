@@ -67,7 +67,6 @@ class SignInViewController: UIViewController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        setConstraints()
         view.addSubview(continueButton)
         view.addSubview(phoneNumberTextField)
         view.addSubview(emailTextField)
