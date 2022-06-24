@@ -7,11 +7,9 @@
 
 import UIKit
 
-class DoctorViewController: MainViewController {
+class DoctorViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
