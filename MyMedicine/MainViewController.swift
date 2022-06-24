@@ -21,7 +21,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupVC()
+//        setupVC()
     }
 }
 
