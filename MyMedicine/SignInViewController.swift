@@ -14,22 +14,59 @@ class SignInViewController: UIViewController, UITabBarControllerDelegate {
     
     lazy var mainLabel: UILabel = {
         let label = UILabel()
-        label.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
-        label.center = CGPoint(x: view.center.x, y: view.center.y - 250)
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.frame = CGRect(x: 30, y: 30, width: 200, height: 50)
+        label.font = UIFont(name: "Mont" , size: 40)
         label.textColor = .black
-        label.text = "Registration"
-        label.textAlignment = .center
+        label.text = "Регистрация"
         return label
     }()
     
-    lazy var continueButton: UIButton = {
+    lazy var phoneNumberTextField: UITextField = {
+        
+        let textField = UITextField()
+        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
+        textField.layer.cornerRadius = 10
+        textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
+        textField.textAlignment = .center
+        textField.backgroundColor = .systemGray6
+        return textField
+    }()
+    
+    lazy var emailTextField: UITextField = {
+        
+        let textField = UITextField()
+        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        textField.layer.cornerRadius = 10
+        textField.attributedPlaceholder = NSAttributedString(string: "mymail@gmail.com")
+        textField.textAlignment = .center
+        
+        textField.backgroundColor = .systemGray6
+        return textField
+    }()
+    
+    lazy var smsTextField: UITextField = {
+        
+        let textField = UITextField()
+        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y)
+        textField.layer.cornerRadius = 10
+        textField.attributedPlaceholder = NSAttributedString(string: "----")
+        textField.textAlignment = .center
+        
+        textField.backgroundColor = .systemGray6
+        textField.isHidden = true
+        return textField
+    }()
+    
+    lazy var beginRegistrationButton: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
         button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
         button.backgroundColor = .white
         button.setTitle("Подтвердить", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.titleLabel?.font = UIFont(name: "Mont", size: 20)
         button.setTitleColor(secondaryColor, for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
@@ -38,47 +75,53 @@ class SignInViewController: UIViewController, UITabBarControllerDelegate {
         return button
     }()
     
-    lazy var phoneNumberTextField: UITextField = {
-        
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 150)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter your phone number")
-        textField.textAlignment = .center
-        
-        textField.backgroundColor = .systemGray6
-        return textField
+    lazy var continueButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
+        button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
+        button.backgroundColor = .white
+        button.setTitle("Подтвердить", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Mont", size: 20)
+        button.setTitleColor(secondaryColor, for: .normal)
+        button.layer.cornerRadius = 10
+        button.backgroundColor = .blue
+        button.alpha = 0.5
+        button.addTarget(self, action: #selector(handlePresentingVC), for: .touchUpInside)
+        button.isHidden = true
+        return button
     }()
     
-    lazy var emailTextField: UITextField = {
-        
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter your email")
-        textField.textAlignment = .center
-        
-        textField.backgroundColor = .systemGray6
-        return textField
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupView()
+    }
+    
+    @objc func handlePresentingVC() {
+        
+//        let pvc = MainViewController()
+//        pvc.setupVC()
+//        pvc.view.backgroundColor = .white
+//        pvc.modalPresentationStyle = .fullScreen
+//        present(pvc, animated: true)
+        
+        phoneNumberTextField.isHidden = true
+        emailTextField.isHidden = true
+        smsTextField.isHidden = false
+        view.addSubview(smsTextField)
         view.addSubview(continueButton)
+    }
+}
+
+extension SignInViewController {
+    
+    private func setupView() {
+        view.addSubview(beginRegistrationButton)
         view.addSubview(phoneNumberTextField)
         view.addSubview(emailTextField)
         view.addSubview(mainLabel)
     }
     
-    @objc func handlePresentingVC() {
-        
-        let pvc = MainViewController()
-        pvc.setupVC()
-        pvc.view.backgroundColor = .white
-        pvc.modalPresentationStyle = .fullScreen
-        present(pvc, animated: true)
-    }
 }
+
