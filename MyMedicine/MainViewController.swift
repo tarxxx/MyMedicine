@@ -11,22 +11,12 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
-    }
-    
-    @objc func printOk() {
-        print("ok")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        setupVC()
     }
 }
 
 
-    extension MainViewController {
+extension MainViewController {
         
         private func setupUI() {
             view.backgroundColor = .white
@@ -54,8 +44,6 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
              doctorVC.tabBarItem.title = "Врач"
 
             viewControllers = [profileVC, testsVC, historyVC, doctorVC]
-            
-             
         }
     }
 
