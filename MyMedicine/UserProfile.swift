@@ -19,4 +19,23 @@ struct UserProfile {
         self.name = name
         self.email = email
     }
+    
+    
+}
+
+struct User {
+    
+    
+    let phone: String
+    let email: String
+    
+    init(phone: String, email: String) {
+        self.phone = phone
+        self.email = email
+    }
+    
+//    static func getUser() -> User {
+//        User(phone: "", email: "")
+//    }
+    
 }

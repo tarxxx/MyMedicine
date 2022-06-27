@@ -22,4 +22,6 @@ struct CurrentUser {
         self.name = name
         self.email = email
     }
+    
+    
 }
