@@ -12,8 +12,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     let manageContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var phone = ""
-    var email = ""
+    var someUser = User()
     
     lazy var mainLabel: UILabel = {
         let label = UILabel()
@@ -67,7 +66,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
         button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
-        button.backgroundColor = .white
         button.setTitle("Подтвердить", for: .normal)
         button.titleLabel?.font = UIFont(name: "Mont", size: 20)
         button.setTitleColor(secondaryColor, for: .normal)
@@ -169,14 +167,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             showError(error_title!,error_text!)
         }
         
-        phone = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        someUser.phone = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        someUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
         let userEntity = NSEntityDescription.entity(forEntityName: "Users", in: manageContext)!
         let user = NSManagedObject(entity: userEntity, insertInto: manageContext)
         
-        user.setValue(phone, forKey: "phone")
-        user.setValue(email, forKey: "email")
+        user.setValue(someUser.phone, forKey: "phone")
+        user.setValue(someUser.email, forKey: "email")
         
         do {
             try manageContext.save()
@@ -212,25 +210,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         phoneNumberTextField.text = ""
         emailTextField.text = ""
     }
-}
 
-// MARK: ShowAlert
-
-extension SignUpViewController {
-    
-    
-    
-    class CustomAlert {
-        static  func alertMessage (_ title : String?, _ message : String?) -> UIAlertController {
-            
-            let alert = UIAlertController(title:  title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title:"Ok", style:.default, handler: nil))
-            return alert
-        }
-    }
+ 
     
 // MARK: Setup View
     private func setupSignUpView() {
+        
         view.addSubview(beginRegistrationButton)
         view.addSubview(phoneNumberTextField)
         view.addSubview(emailTextField)

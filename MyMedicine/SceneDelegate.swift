@@ -21,9 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let vc = SignUpViewController()
-        let navVC = UINavigationController(rootViewController: vc)
-        window?.rootViewController = navVC
+        let sinvc = SignInViewController()
+        let supvc = SignUpViewController()
+        let navVC = UINavigationController(rootViewController: supvc)
+        window?.rootViewController = sinvc
         window?.makeKeyAndVisible()
     }
 
