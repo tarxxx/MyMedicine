@@ -17,12 +17,11 @@ class RegistrationViewController: UIViewController {
    
     
     @objc private func completeRegistration() {
-        
-        saveUserdata()
+        fetchUserData()
         toMainVC()
     }
     
-    private func saveUserdata() {
+    private func fetchUserData() {
         // func with fetch user data
     }
     

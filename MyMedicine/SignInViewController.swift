@@ -13,11 +13,13 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     let manageContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    var currentUser = User()
+    
     lazy var emailTextField: UITextField = {
         
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
         textField.layer.cornerRadius = 10
         textField.attributedPlaceholder = NSAttributedString(string: "mymail@gmail.com")
         textField.textAlignment = .center
@@ -30,7 +32,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
         textField.layer.cornerRadius = 10
         textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
         textField.textAlignment = .center
@@ -59,23 +61,23 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
         button.alpha = 1
-        button.addTarget(self, action: #selector(login), for: .touchUpInside)
+        button.addTarget(self, action: #selector(push), for: .touchUpInside)
         button.setTitle("Вход", for: .normal)
+        
         return button
     }()
     
     
-    var currentUser = User()
     
     override func viewDidLoad() {
-        view.backgroundColor = .white
-        view.addSubview(emailTextField)
-        view.addSubview(phoneTextField)
-        view.addSubview(toRegister)
-        view.addSubview(loginButton)
+       setupSignInView()
     }
     
-    @objc func login() {
+    @objc func push() {
+        login()
+    }
+    
+    func login() {
         let (error_title,error_text) = validateTextFields()
         
         if  error_title != nil && error_text != nil {
@@ -85,8 +87,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         currentUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         currentUser.phone = phoneTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
-        fetchData.predicate = NSPredicate(format:"email = %@",currentUser.email)
+        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: "Human")
+        fetchData.predicate = NSPredicate(format:"humanEmail = %@",currentUser.email)
         fetchData.predicate = NSPredicate(format:"phone = %@",currentUser.phone)
         
         do
@@ -100,12 +102,13 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             
             for data in results as! [NSManagedObject]
             {
-                currentUser.email = data.value(forKey: "email") as! String
+                currentUser.email = data.value(forKey: "humanEmail") as! String
                 currentUser.phone =  data.value(forKey: "phone") as! String
                 
             }
+            
             self.toMainVC()
-            self.toClearAll()
+//          self.toClearAll()
             
         }
         
@@ -115,7 +118,6 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         }
       
     }
-    
     
     func validateTextFields ()  -> (String?,String?) {
         
@@ -133,7 +135,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func toClearAll () {
+    private func toClearAll () {
         phoneTextField.text = ""
         emailTextField.text = ""
     }
@@ -141,15 +143,23 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     @objc func toSignUpVC() {
         let svc = SignUpViewController()
         svc.view.backgroundColor = .white
-        svc.modalPresentationStyle = .fullScreen
+        svc.modalPresentationStyle = .automatic
         present(svc, animated: true)
     }
     
-    func toMainVC() {
+    private func toMainVC() {
+//      dismiss(animated: true)
         let mvc = MainViewController()
         mvc.setupVC()
         mvc.modalPresentationStyle = .fullScreen
         present(mvc, animated: true)
     }
     
+    private func setupSignInView() {
+        view.backgroundColor = .white
+        view.addSubview(emailTextField)
+        view.addSubview(phoneTextField)
+        view.addSubview(toRegister)
+        view.addSubview(loginButton)
+    }
 }

@@ -12,7 +12,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     let manageContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var someUser = User()
+    var newUser = User()
     
     lazy var mainLabel: UILabel = {
         let label = UILabel()
@@ -23,23 +23,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    lazy var phoneNumberTextField: UITextField = {
-        
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
-        textField.textAlignment = .center
-        textField.backgroundColor = .systemGray6
-        return textField
-    }()
-    
     lazy var emailTextField: UITextField = {
         
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
         textField.layer.cornerRadius = 10
         textField.attributedPlaceholder = NSAttributedString(string: "mymail@gmail.com")
         textField.textAlignment = .center
@@ -48,15 +36,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    lazy var phoneNumberTextField: UITextField = {
+        
+        let textField = UITextField()
+        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
+        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        textField.layer.cornerRadius = 10
+        textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
+        textField.textAlignment = .center
+        textField.backgroundColor = .systemGray6
+        return textField
+    }()
+    
+    
     lazy var smsTextField: UITextField = {
-
+        
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
         textField.center = CGPoint(x: view.center.x, y: view.center.y)
         textField.layer.cornerRadius = 10
         textField.attributedPlaceholder = NSAttributedString(string: "----")
         textField.textAlignment = .center
-
+        
         textField.backgroundColor = .systemGray6
         textField.isHidden = true
         return textField
@@ -81,13 +82,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
         button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
         button.backgroundColor = .white
-        button.setTitle("Подтвердить", for: .normal)
+        button.setTitle("Проодолжить", for: .normal)
         button.titleLabel?.font = UIFont(name: "Mont", size: 20)
         button.setTitleColor(secondaryColor, for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
         button.alpha = 0.5
-        button.addTarget(self, action: #selector(beginRegistration), for: .touchUpInside)
+        button.addTarget(self, action: #selector(closeVC), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
@@ -95,14 +96,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupSignUpView()
         textFieldSetup()
         setContinueButton(enabled: false)
-        phoneNumberTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-     
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -124,10 +123,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func beginRegistration() {
-        
-//        fetchNumberAndEmail()
-//        setupRegistrationView()
-        saveData()
+        fetchUserData()
     }
     
     @objc private func textFieldChanged() {
@@ -135,14 +131,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         guard
             let phoneNumber = phoneNumberTextField.text,
             let email = emailTextField.text
-            else { return }
+        else { return }
         
         let formFilled = !(email.isEmpty) && !(phoneNumber.isEmpty)
         
         setContinueButton(enabled: formFilled)
     }
-    
-    
     
     private func setContinueButton(enabled:Bool) {
         
@@ -150,16 +144,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             continueButton.alpha = 1.0
             continueButton.isEnabled = true
         } else {
-            continueButton.alpha = 0.5
+            continueButton.alpha = 0.3
             continueButton.isEnabled = false
         }
     }
     
-   
-    
     // MARK: Core Data
     
-    private func saveData() {
+    private func fetchUserData() {
         
         let (error_title,error_text) = validateTextFields()
         
@@ -167,27 +159,36 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             showError(error_title!,error_text!)
         }
         
-        someUser.phone = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        someUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        newUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        newUser.phone = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        let userEntity = NSEntityDescription.entity(forEntityName: "Users", in: manageContext)!
+        let userEntity = NSEntityDescription.entity(forEntityName: "Human", in: manageContext)!
         let user = NSManagedObject(entity: userEntity, insertInto: manageContext)
         
-        user.setValue(someUser.phone, forKey: "phone")
-        user.setValue(someUser.email, forKey: "email")
+        user.setValue(newUser.email, forKey: "humanEmail")
+        user.setValue(newUser.phone, forKey: "phone")
         
         do {
             try manageContext.save()
             print("Value Saved")
-            
-            self.showError("Sucessfully Signed Up", "Go to Login and try ..")
+            self.showError("Регистрация завершена", "Теперь вы можете войти, используя свои логин и пароль")
             self.toClearAll()
+            beginRegistrationButton.isHidden = true
+            continueButton.isHidden = false
+            emailTextField.isHidden = true
+            phoneNumberTextField.isHidden = true
         }
         catch {
             self.showError("Try Again", "Try with another email and password")
         }
     }
     
+    @objc func closeVC() {
+        self.dismiss(animated: true, completion: nil)
+        let sivc = SignInViewController()
+        sivc.modalPresentationStyle = .automatic
+        present(sivc, animated: true)
+    }
     
     func validateTextFields ()  -> (String?,String?) {
         
@@ -206,50 +207,56 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func toClearAll () {
+    private func toClearAll () {
         phoneNumberTextField.text = ""
         emailTextField.text = ""
     }
-
- 
     
-// MARK: Setup View
-    private func setupSignUpView() {
-        
-        view.addSubview(beginRegistrationButton)
-        view.addSubview(phoneNumberTextField)
-        view.addSubview(emailTextField)
-        view.addSubview(mainLabel)
-    }
+    
+    
+    // MARK: Setup View
+    
     
     private func setupRegistrationView() {
         phoneNumberTextField.isHidden = true
         emailTextField.isHidden = true
-//        smsTextField.isHidden = false
-//        view.addSubview(smsTextField)
         view.addSubview(continueButton)
     }
     
     
     // MARK: Firebase
     
-    private func fetchNumberAndEmail() {
+    private func fetchNumberAndEmailToFirebase() {
         // func with fetch user number and email and get sms verification code()
     }
+}
+
+// MARK: Keyboard
+
+extension SignUpViewController {
     
     private func textFieldSetup() {
         phoneNumberTextField.delegate = self
         phoneNumberTextField.tag = 0
         phoneNumberTextField.returnKeyType = .next
+        phoneNumberTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         emailTextField.delegate = self
         emailTextField.tag = 1
         emailTextField.returnKeyType = .done
+        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         registerKeyboardNotification()
         hideKeyboardWhenTappedAround()
     }
+    
+    private func setupSignUpView() {
+        view.backgroundColor = .white
+        view.addSubview(beginRegistrationButton)
+        view.addSubview(continueButton)
+        view.addSubview(phoneNumberTextField)
+        view.addSubview(emailTextField)
+        view.addSubview(mainLabel)
+    }
 }
-
-// MARK: Keyboard
 
 extension SignUpViewController {
     
@@ -272,31 +279,32 @@ extension SignUpViewController {
         return true
     }
     
-    private func registerKeyboardNotification() {
+    func registerKeyboardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func removeKeyboardNotification() {
+    func removeKeyboardNotification() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc private func keyboardWillShow(notification: Notification) {
-        self.view.frame.origin.y = -200
-        
-    }
-    
-    @objc private func keyboardWillHide(notification: Notification) {
-        self.view.frame.origin.y = 0
-    }
-    
-    private func hideKeyboardWhenTappedAround() {
+    func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(SignUpViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
-    @objc private func dismissKeyboard() {
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        self.view.frame.origin.y = -200
+        
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 }

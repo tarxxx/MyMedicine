@@ -19,9 +19,6 @@ class ProfileViewController: UIViewController {
         
         
     }
-  
-    
-    
 }
 
 
