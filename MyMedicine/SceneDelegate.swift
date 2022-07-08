@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = SignInViewController()
+        let sinvc = SignInViewController()
+        window?.rootViewController = sinvc
         window?.makeKeyAndVisible()
     }
 

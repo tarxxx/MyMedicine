@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct UserProfile {
+struct User {
     
-    let name: String?
-    let email: String?
+    var phone = ""
+    var email = ""
+    var password = ""
     
-    init(data: [String: Any]) {
-        let name = data["name"] as? String
-        let email = data["email"] as? String
-        
-        self.name = name
-        self.email = email
-    }
 }
+
+//let user = UserDefaults.standard
