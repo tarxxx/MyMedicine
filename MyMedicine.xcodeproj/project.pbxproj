@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		951D0A5128788D7D005D13FB /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951D0A5028788D7D005D13FB /* StorageManager.swift */; };
 		955597AB2863463200A88E60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597AA2863463200A88E60 /* AppDelegate.swift */; };
-		955597AD2863463200A88E60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955597AC2863463200A88E60 /* SceneDelegate.swift */; };
 		955597B52863463200A88E60 /* MyMedicine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 955597B32863463200A88E60 /* MyMedicine.xcdatamodeld */; };
 		955597B72863463300A88E60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 955597B62863463300A88E60 /* Assets.xcassets */; };
 		955597BA2863463300A88E60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 955597B82863463300A88E60 /* LaunchScreen.storyboard */; };
@@ -46,9 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		951D0A5028788D7D005D13FB /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		955597A72863463200A88E60 /* MyMedicine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMedicine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		955597AA2863463200A88E60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		955597AC2863463200A88E60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		955597B42863463200A88E60 /* MyMedicine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyMedicine.xcdatamodel; sourceTree = "<group>"; };
 		955597B62863463300A88E60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		955597B92863463300A88E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -120,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				955597AA2863463200A88E60 /* AppDelegate.swift */,
-				955597AC2863463200A88E60 /* SceneDelegate.swift */,
 				955597E728634B4600A88E60 /* MainViewController.swift */,
 				958AF9DD2863638700A28618 /* SignInViewController.swift */,
 				958AF9DF286363AC00A28618 /* SignUpViewController.swift */,
@@ -130,6 +129,7 @@
 				955597E328634A7F00A88E60 /* HistoryViewController.swift */,
 				955597E528634A8F00A88E60 /* DoctorViewController.swift */,
 				95A795F3286ADF8800AAA8AA /* CustomAlert.swift */,
+				951D0A5028788D7D005D13FB /* StorageManager.swift */,
 				958AF9E1286363C500A28618 /* CurrentUser.swift */,
 				958AF9E3286363D700A28618 /* UserProfile.swift */,
 				955597B62863463300A88E60 /* Assets.xcassets */,
@@ -290,7 +290,6 @@
 				955597E228634A6F00A88E60 /* TestsViewController.swift in Sources */,
 				955597AB2863463200A88E60 /* AppDelegate.swift in Sources */,
 				958AF9E2286363C500A28618 /* CurrentUser.swift in Sources */,
-				955597AD2863463200A88E60 /* SceneDelegate.swift in Sources */,
 				95A795F22869EF3700AAA8AA /* RegistrationViewController.swift in Sources */,
 				955597E028634A6000A88E60 /* ProfileViewController.swift in Sources */,
 				958AF9E0286363AC00A28618 /* SignUpViewController.swift in Sources */,
@@ -299,6 +298,7 @@
 				958AF9E4286363D700A28618 /* UserProfile.swift in Sources */,
 				955597E428634A8000A88E60 /* HistoryViewController.swift in Sources */,
 				955597E828634B4600A88E60 /* MainViewController.swift in Sources */,
+				951D0A5128788D7D005D13FB /* StorageManager.swift in Sources */,
 				955597E628634A8F00A88E60 /* DoctorViewController.swift in Sources */,
 				95A795F4286ADF8800AAA8AA /* CustomAlert.swift in Sources */,
 			);
