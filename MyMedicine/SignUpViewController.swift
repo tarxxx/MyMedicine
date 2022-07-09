@@ -10,9 +10,9 @@ import CoreData
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
-    let manageContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let manageContext = StorageManager.shared.persistentContainer.viewContext
     
-    var newUser = User()
+    private var newUser = User()
     
     lazy var mainLabel: UILabel = {
         let label = UILabel()
@@ -99,6 +99,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         setupSignUpView()
         textFieldSetup()
         setContinueButton(enabled: false)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
+    }
+    
+    @objc private func backToSignIn() {
+        
     }
     
     
@@ -170,7 +175,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         do {
             try manageContext.save()
-            print("Value Saved")
+            print("Значения сохранены")
             self.showError("Регистрация завершена", "Теперь вы можете войти, используя свои логин и пароль")
             self.toClearAll()
             beginRegistrationButton.isHidden = true
@@ -179,7 +184,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             phoneNumberTextField.isHidden = true
         }
         catch {
-            self.showError("Try Again", "Try with another email and password")
+            self.showError("Пользователь не найден", "Попробуйте другой логин или пароль")
         }
     }
     
@@ -196,7 +201,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             
         {
             
-            return ("Empty Fields","Please Enter in all Fields")
+            return ("Одно из полей не заполнено","Пожалуйста заполните все поля")
         }
         return (nil,nil)
     }

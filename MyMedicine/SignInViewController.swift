@@ -11,9 +11,9 @@ import CoreData
 
 class SignInViewController: UIViewController, UITextFieldDelegate {
     
-    let manageContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let context = StorageManager.shared.persistentContainer.viewContext
     
-    var currentUser = User()
+    private var currentUser = User()
     
     lazy var emailTextField: UITextField = {
         
@@ -71,7 +71,13 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
        setupSignInView()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
     }
+    
+    @objc private func backToSignIn() {
+        
+    }
+    
     
     @objc func push() {
         login()
@@ -93,11 +99,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         do
         {
-            let results = try manageContext.fetch(fetchData)
+            let results = try context.fetch(fetchData)
             
             if results.isEmpty
             {
-                self.showError("Invalid Credentials", "If you don't have a account try to SignUp...")
+                self.showError("Ошибка", "Если у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
             }
             
             for data in results as! [NSManagedObject]
@@ -114,7 +120,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         catch
         {
-            self.showError("User Not Found", "Try to Sign Up")
+            self.showError("Пользователь не найден", "Пройдите регистрацию")
         }
       
     }
@@ -123,7 +129,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             
-            return ("Empty Fields","Please Enter in all Fields")
+            return ("Не все поля заполнены", "Пожалуйста заполните все поля")
         }
         return (nil,nil)
     }
@@ -141,7 +147,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func toSignUpVC() {
-        let svc = SignUpViewController()
+        let svc = UINavigationController(rootViewController: SignUpViewController())
         svc.view.backgroundColor = .white
         svc.modalPresentationStyle = .automatic
         present(svc, animated: true)
@@ -149,8 +155,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     private func toMainVC() {
 //      dismiss(animated: true)
-        let mvc = MainViewController()
-        mvc.setupVC()
+        let mvc = UINavigationController(rootViewController: MainViewController())
         mvc.modalPresentationStyle = .fullScreen
         present(mvc, animated: true)
     }
