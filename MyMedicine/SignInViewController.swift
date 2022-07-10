@@ -13,11 +13,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     private let context = StorageManager.shared.persistentContainer.viewContext
     
-//    private var currentUser = User()
     var users = [User]()
     var login: Bool = false
     let userDefaults = UserDefaults()
-
     
     lazy var emailTextField: UITextField = {
         
@@ -71,10 +69,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    
-    
     override func viewDidLoad() {
-       setupSignInView()
+        setupSignInView()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
         users = StorageManager.shared.fetchUser()
         if (userDefaults.value(forKey: "login") != nil) == true
@@ -84,28 +80,17 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
     @objc private func backToSignIn() {
         
     }
-    
-    
-//    @objc func push() {
-//        toLogin()
-//    }
     
     @objc func toLogin() {
         
         if emailTextField.text!.isEmpty || loginTextField.text!.isEmpty{
             
-            // create the alert
             showError("Error", "Fill all fields")
         }
         
-        // here we are looping through each and every user present inside database
         for user in users {
             if emailTextField.text == user.email && loginTextField.text == user.name
             {
@@ -121,61 +106,10 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         if login == false {
             
-            // create the alert
             showError("Ошибка", "Есои у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
             toClearAll()
         }
-    
-//        let (error_title,error_text) = validateTextFields()
-//
-//        if  error_title != nil && error_text != nil {
-//            showError(error_title!,error_text!)
-//        }
-//
-//        currentUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//        currentUser.login = loginTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//
-//        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: "Human")
-//        fetchData.predicate = NSPredicate(format:"humanEmail = %@",currentUser.email)
-//        fetchData.predicate = NSPredicate(format:"login = %@",currentUser.login)
-//
-//        do
-//        {
-//            let results = try context.fetch(fetchData)
-//
-//            if results.isEmpty
-//            {
-//                self.showError("Ошибка", "Есои у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
-//            }
-//
-//            for data in results as! [NSManagedObject]
-//            {
-//                currentUser.email = data.value(forKey: "humanEmail") as! String
-//                currentUser.login =  data.value(forKey: "login") as! String
-//
-//            }
-//
-//            self.toMainVC()
-//         self.toClearAll()
-            
-        }
-        
-//        catch
-//        {
-//            self.showError("Пользователь не найден", "Пройдите регистрацию")
-//        }
-      
-    
-    
-    func validateTextFields ()  -> (String?,String?) {
-        
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            
-            return ("Empty Fields","Please Enter in all Fields")
-        }
-        return (nil,nil)
     }
-    
     
     func showError(_ title:String,_ message : String) {
         
@@ -196,7 +130,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func toMainVC() {
-//      dismiss(animated: true)
+        //      dismiss(animated: true)
         let mvc = UINavigationController(rootViewController: MainViewController())
         mvc.modalPresentationStyle = .fullScreen
         present(mvc, animated: true)

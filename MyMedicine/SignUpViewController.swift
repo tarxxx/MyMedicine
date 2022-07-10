@@ -172,11 +172,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 newUser.name = name
                 newUser.email = email
                 
-
                 StorageManager.shared.saveContext()
-                
-                
-                    
+
                 self.toClearAll()
                 beginRegistrationButton.isHidden = true
                 continueButton.isHidden = false
@@ -185,37 +182,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 let sivc = SignInViewController()
                 self.navigationController?.pushViewController(sivc, animated: true)
                 }
-            
-            
             }
-//        let (error_title,error_text) = validateTextFields()
-//
-//        if  error_title != nil && error_text != nil {
-//            showError(error_title!,error_text!)
-//        }
-//
-//        newUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//        newUser.login = loginTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//
-//        let userEntity = NSEntityDescription.entity(forEntityName: "Human", in: manageContext)!
-//        let user = NSManagedObject(entity: userEntity, insertInto: manageContext)
-//
-//        user.setValue(newUser.email, forKey: "humanEmail")
-//        user.setValue(newUser.login, forKey: "login")
-//
-//        do {
-//            try manageContext.save()
-//            print("Значения сохранены")
-//            self.showError("Регистрация завершена", "Теперь вы можете войти, используя свои логин и пароль")
-//            self.toClearAll()
-//            beginRegistrationButton.isHidden = true
-//            continueButton.isHidden = false
-//            emailTextField.isHidden = true
-//            loginTextField.isHidden = true
-//        }
-//        catch {
-//            self.showError("Пользователь с таким именем уже существует", "Попробуйте другой логин")
-//        }
     }
     
     @objc func closeVC() {
@@ -239,18 +206,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func showError(_ title:String,_ message : String) {
         
         self.present(CustomAlert.alertMessage(title, message), animated: true, completion: nil)
-        
+
     }
     
     private func toClearAll () {
         loginTextField.text = ""
         emailTextField.text = ""
     }
-    
-    
-    
+
     // MARK: Setup View
-    
     
     private func setupRegistrationView() {
         loginTextField.isHidden = true
