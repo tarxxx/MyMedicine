@@ -13,7 +13,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     private let context = StorageManager.shared.persistentContainer.viewContext
     
-    private var currentUser = User()
+//    private var currentUser = User()
+    var users = [User]()
+    var login: Bool = false
+    let userDefaults = UserDefaults()
+
     
     lazy var emailTextField: UITextField = {
         
@@ -28,13 +32,13 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    lazy var phoneTextField: UITextField = {
+    lazy var loginTextField: UITextField = {
         
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
         textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
         textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
+        textField.attributedPlaceholder = NSAttributedString(string: "Login")
         textField.textAlignment = .center
         textField.backgroundColor = .systemGray6
         return textField
@@ -61,7 +65,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
         button.alpha = 1
-        button.addTarget(self, action: #selector(push), for: .touchUpInside)
+        button.addTarget(self, action: #selector(toLogin), for: .touchUpInside)
         button.setTitle("Вход", for: .normal)
         
         return button
@@ -72,6 +76,16 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
        setupSignInView()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
+        users = StorageManager.shared.fetchUser()
+        if (userDefaults.value(forKey: "login") != nil) == true
+        {
+            toMainVC()
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     @objc private func backToSignIn() {
@@ -79,57 +93,85 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @objc func push() {
-        login()
-    }
+//    @objc func push() {
+//        toLogin()
+//    }
     
-    func login() {
-        let (error_title,error_text) = validateTextFields()
+    @objc func toLogin() {
         
-        if  error_title != nil && error_text != nil {
-            showError(error_title!,error_text!)
+        if emailTextField.text!.isEmpty || loginTextField.text!.isEmpty{
+            
+            // create the alert
+            showError("Error", "Fill all fields")
         }
         
-        currentUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        currentUser.phone = phoneTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: "Human")
-        fetchData.predicate = NSPredicate(format:"humanEmail = %@",currentUser.email)
-        fetchData.predicate = NSPredicate(format:"phone = %@",currentUser.phone)
-        
-        do
-        {
-            let results = try context.fetch(fetchData)
-            
-            if results.isEmpty
+        // here we are looping through each and every user present inside database
+        for user in users {
+            if emailTextField.text == user.email && loginTextField.text == user.name
             {
-                self.showError("Ошибка", "Если у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
-            }
-            
-            for data in results as! [NSManagedObject]
-            {
-                currentUser.email = data.value(forKey: "humanEmail") as! String
-                currentUser.phone =  data.value(forKey: "phone") as! String
+                login = true
+                
+                userDefaults.setValue(user.name, forKey: "name")
+                userDefaults.setValue(user.email, forKey: "email")
+                userDefaults.setValue(true, forKey: "login")
+                toMainVC()
                 
             }
+        }
+        
+        if login == false {
             
-            self.toMainVC()
-//          self.toClearAll()
+            // create the alert
+            showError("Ошибка", "Есои у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
+            toClearAll()
+        }
+    
+//        let (error_title,error_text) = validateTextFields()
+//
+//        if  error_title != nil && error_text != nil {
+//            showError(error_title!,error_text!)
+//        }
+//
+//        currentUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+//        currentUser.login = loginTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: "Human")
+//        fetchData.predicate = NSPredicate(format:"humanEmail = %@",currentUser.email)
+//        fetchData.predicate = NSPredicate(format:"login = %@",currentUser.login)
+//
+//        do
+//        {
+//            let results = try context.fetch(fetchData)
+//
+//            if results.isEmpty
+//            {
+//                self.showError("Ошибка", "Есои у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
+//            }
+//
+//            for data in results as! [NSManagedObject]
+//            {
+//                currentUser.email = data.value(forKey: "humanEmail") as! String
+//                currentUser.login =  data.value(forKey: "login") as! String
+//
+//            }
+//
+//            self.toMainVC()
+//         self.toClearAll()
             
         }
         
-        catch
-        {
-            self.showError("Пользователь не найден", "Пройдите регистрацию")
-        }
+//        catch
+//        {
+//            self.showError("Пользователь не найден", "Пройдите регистрацию")
+//        }
       
-    }
+    
     
     func validateTextFields ()  -> (String?,String?) {
         
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             
-            return ("Не все поля заполнены", "Пожалуйста заполните все поля")
+            return ("Empty Fields","Please Enter in all Fields")
         }
         return (nil,nil)
     }
@@ -142,7 +184,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func toClearAll () {
-        phoneTextField.text = ""
+        loginTextField.text = ""
         emailTextField.text = ""
     }
     
@@ -163,8 +205,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     private func setupSignInView() {
         view.backgroundColor = .white
         view.addSubview(emailTextField)
-        view.addSubview(phoneTextField)
+        view.addSubview(loginTextField)
         view.addSubview(toRegister)
         view.addSubview(loginButton)
     }
 }
+

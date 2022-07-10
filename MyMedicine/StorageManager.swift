@@ -8,11 +8,12 @@
 import Foundation
 import CoreData
 
-struct StorageManager {
+class StorageManager {
     static let shared = StorageManager()
+    
     private init() {}
     
-    var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentContainer = {
       
        let container = NSPersistentContainer(name: "MyMedicine")
        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -24,9 +25,11 @@ struct StorageManager {
        return container
     }()
     
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+    
+    lazy var context = persistentContainer.viewContext
+     func saveContext () {
+         
+         if context.hasChanges {
             do {
                 try context.save()
             } catch {
@@ -34,5 +37,20 @@ struct StorageManager {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func fetchUser() -> [User]
+    {
+        
+        var user = [User]()
+        let fetchRequest = User.fetchRequest() as NSFetchRequest<User>
+        
+        do {
+            user = try context.fetch(fetchRequest)
+        }
+        catch {
+            print("Some error occured when fetching the products")
+        }
+        return user
     }
 }

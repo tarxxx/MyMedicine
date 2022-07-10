@@ -27,7 +27,6 @@ class RegistrationViewController: UIViewController {
     
     private func toMainVC() {
         let pvc = MainViewController()
-        pvc.setupMainVC()
         pvc.view.backgroundColor = .white
         pvc.modalPresentationStyle = .fullScreen
         present(pvc, animated: true)

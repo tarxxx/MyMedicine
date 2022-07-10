@@ -12,7 +12,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     let manageContext = StorageManager.shared.persistentContainer.viewContext
     
-    private var newUser = User()
     
     lazy var mainLabel: UILabel = {
         let label = UILabel()
@@ -36,13 +35,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    lazy var phoneNumberTextField: UITextField = {
+    lazy var loginTextField: UITextField = {
         
         let textField = UITextField()
         textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
         textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
         textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "+7(XXX)XXXXXXX")
+        textField.attributedPlaceholder = NSAttributedString(string: "Login")
         textField.textAlignment = .center
         textField.backgroundColor = .systemGray6
         return textField
@@ -103,7 +102,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func backToSignIn() {
-        
+        dismiss(animated: true)
+        let sivc = UINavigationController(rootViewController: SignInViewController())
+        sivc.view.backgroundColor = .white
+        sivc.modalPresentationStyle = .automatic
+        present(sivc, animated: true)
     }
     
     
@@ -134,11 +137,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @objc private func textFieldChanged() {
         
         guard
-            let phoneNumber = phoneNumberTextField.text,
+            let login = loginTextField.text,
             let email = emailTextField.text
         else { return }
         
-        let formFilled = !(email.isEmpty) && !(phoneNumber.isEmpty)
+        let formFilled = !(email.isEmpty) && !(login.isEmpty)
         
         setContinueButton(enabled: formFilled)
     }
@@ -157,35 +160,62 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     // MARK: Core Data
     
     private func fetchUserData() {
-        
-        let (error_title,error_text) = validateTextFields()
-        
-        if  error_title != nil && error_text != nil {
-            showError(error_title!,error_text!)
-        }
-        
-        newUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        newUser.phone = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        let userEntity = NSEntityDescription.entity(forEntityName: "Human", in: manageContext)!
-        let user = NSManagedObject(entity: userEntity, insertInto: manageContext)
-        
-        user.setValue(newUser.email, forKey: "humanEmail")
-        user.setValue(newUser.phone, forKey: "phone")
-        
-        do {
-            try manageContext.save()
-            print("Значения сохранены")
-            self.showError("Регистрация завершена", "Теперь вы можете войти, используя свои логин и пароль")
-            self.toClearAll()
-            beginRegistrationButton.isHidden = true
-            continueButton.isHidden = false
-            emailTextField.isHidden = true
-            phoneNumberTextField.isHidden = true
-        }
-        catch {
-            self.showError("Пользователь не найден", "Попробуйте другой логин или пароль")
-        }
+        if let name = loginTextField.text, let email = emailTextField.text
+        {
+            if name.isEmpty || email.isEmpty {
+                
+                // create the alert
+                showError("Error", "Fill all fields")
+            }
+            else {
+                let newUser = User(context: StorageManager.shared.context)
+                newUser.name = name
+                newUser.email = email
+                
+
+                StorageManager.shared.saveContext()
+                
+                
+                    
+                self.toClearAll()
+                beginRegistrationButton.isHidden = true
+                continueButton.isHidden = false
+                emailTextField.isHidden = true
+                loginTextField.isHidden = true
+                let sivc = SignInViewController()
+                self.navigationController?.pushViewController(sivc, animated: true)
+                }
+            
+            
+            }
+//        let (error_title,error_text) = validateTextFields()
+//
+//        if  error_title != nil && error_text != nil {
+//            showError(error_title!,error_text!)
+//        }
+//
+//        newUser.email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+//        newUser.login = loginTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//        let userEntity = NSEntityDescription.entity(forEntityName: "Human", in: manageContext)!
+//        let user = NSManagedObject(entity: userEntity, insertInto: manageContext)
+//
+//        user.setValue(newUser.email, forKey: "humanEmail")
+//        user.setValue(newUser.login, forKey: "login")
+//
+//        do {
+//            try manageContext.save()
+//            print("Значения сохранены")
+//            self.showError("Регистрация завершена", "Теперь вы можете войти, используя свои логин и пароль")
+//            self.toClearAll()
+//            beginRegistrationButton.isHidden = true
+//            continueButton.isHidden = false
+//            emailTextField.isHidden = true
+//            loginTextField.isHidden = true
+//        }
+//        catch {
+//            self.showError("Пользователь с таким именем уже существует", "Попробуйте другой логин")
+//        }
     }
     
     @objc func closeVC() {
@@ -197,7 +227,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func validateTextFields ()  -> (String?,String?) {
         
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || phoneNumberTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
             
         {
             
@@ -213,7 +243,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func toClearAll () {
-        phoneNumberTextField.text = ""
+        loginTextField.text = ""
         emailTextField.text = ""
     }
     
@@ -223,7 +253,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     private func setupRegistrationView() {
-        phoneNumberTextField.isHidden = true
+        loginTextField.isHidden = true
         emailTextField.isHidden = true
         view.addSubview(continueButton)
     }
@@ -241,10 +271,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 extension SignUpViewController {
     
     private func textFieldSetup() {
-        phoneNumberTextField.delegate = self
-        phoneNumberTextField.tag = 0
-        phoneNumberTextField.returnKeyType = .next
-        phoneNumberTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        loginTextField.delegate = self
+        loginTextField.tag = 0
+        loginTextField.returnKeyType = .next
+        loginTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         emailTextField.delegate = self
         emailTextField.tag = 1
         emailTextField.returnKeyType = .done
@@ -257,7 +287,7 @@ extension SignUpViewController {
         view.backgroundColor = .white
         view.addSubview(beginRegistrationButton)
         view.addSubview(continueButton)
-        view.addSubview(phoneNumberTextField)
+        view.addSubview(loginTextField)
         view.addSubview(emailTextField)
         view.addSubview(mainLabel)
     }
@@ -275,7 +305,7 @@ extension SignUpViewController {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField, phoneNumberTextField.text != "" {
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField, loginTextField.text != "" {
             nextField.becomeFirstResponder()
         } else if textField == self.emailTextField {
             textField.resignFirstResponder()
