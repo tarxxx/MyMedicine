@@ -24,7 +24,6 @@
 		958AF9E0286363AC00A28618 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958AF9DF286363AC00A28618 /* SignUpViewController.swift */; };
 		958AF9E4286363D700A28618 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958AF9E3286363D700A28618 /* UserProfile.swift */; };
 		95A0BE31287ACAF400F9527D /* UserCoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A0BE30287ACAF400F9527D /* UserCoreDataProperties.swift */; };
-		95A795F22869EF3700AAA8AA /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A795F12869EF3700AAA8AA /* RegistrationViewController.swift */; };
 		95A795F4286ADF8800AAA8AA /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A795F3286ADF8800AAA8AA /* CustomAlert.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +66,6 @@
 		958AF9DF286363AC00A28618 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		958AF9E3286363D700A28618 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		95A0BE30287ACAF400F9527D /* UserCoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoreDataProperties.swift; sourceTree = "<group>"; };
-		95A795F12869EF3700AAA8AA /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		95A795F3286ADF8800AAA8AA /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +121,6 @@
 				955597E728634B4600A88E60 /* MainViewController.swift */,
 				958AF9DD2863638700A28618 /* SignInViewController.swift */,
 				958AF9DF286363AC00A28618 /* SignUpViewController.swift */,
-				95A795F12869EF3700AAA8AA /* RegistrationViewController.swift */,
 				955597DF28634A6000A88E60 /* ProfileViewController.swift */,
 				955597E128634A6F00A88E60 /* TestsViewController.swift */,
 				955597E328634A7F00A88E60 /* HistoryViewController.swift */,
@@ -290,7 +287,6 @@
 				95A0BE31287ACAF400F9527D /* UserCoreDataProperties.swift in Sources */,
 				955597E228634A6F00A88E60 /* TestsViewController.swift in Sources */,
 				955597AB2863463200A88E60 /* AppDelegate.swift in Sources */,
-				95A795F22869EF3700AAA8AA /* RegistrationViewController.swift in Sources */,
 				955597E028634A6000A88E60 /* ProfileViewController.swift in Sources */,
 				958AF9E0286363AC00A28618 /* SignUpViewController.swift in Sources */,
 				955597B52863463200A88E60 /* MyMedicine.xcdatamodeld in Sources */,

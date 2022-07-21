@@ -12,7 +12,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     let manageContext = StorageManager.shared.persistentContainer.viewContext
     
-    
     lazy var mainLabel: UILabel = {
         let label = UILabel()
         label.frame = CGRect(x: 30, y: 30, width: 200, height: 50)
@@ -22,106 +21,116 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
+    lazy var nameTextField: UITextField = {
+        
+        setupTextFields(withPlaceholder: "Иван", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
+    }()
+    
     lazy var emailTextField: UITextField = {
         
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "mymail@gmail.com")
-        textField.textAlignment = .center
+        setupTextFields(withPlaceholder: "MyMail@mail.com", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
         
-        textField.backgroundColor = .systemGray6
-        return textField
     }()
     
-    lazy var loginTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "Login")
-        textField.textAlignment = .center
-        textField.backgroundColor = .systemGray6
-        return textField
+        setupTextFields(withPlaceholder: "Пароль", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: false)
     }()
     
     
-    lazy var smsTextField: UITextField = {
+    lazy var surnameTextField: UITextField = {
         
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "----")
-        textField.textAlignment = .center
+        setupTextFields(withPlaceholder: "Иванов", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: false)
+    }()
+    
+    lazy var ageTextField: UITextField = {
         
-        textField.backgroundColor = .systemGray6
-        textField.isHidden = true
-        return textField
+        setupTextFields(withPlaceholder: "30", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
+    }()
+    
+    lazy var maleTextField: UITextField = {
+        
+        setupTextFields(withPlaceholder: "М", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
+    }()
+    
+    lazy var heightTextField: UITextField = {
+        
+        setupTextFields(withPlaceholder: "180", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
+    }()
+    
+    lazy var weightTextField: UITextField = {
+        
+        setupTextFields(withPlaceholder: "80", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
+    }()
+    
+    lazy var birthdayDateTextField: UITextField = {
+        
+        setupTextFields(withPlaceholder: "30", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: true)
     }()
     
     lazy var beginRegistrationButton: UIButton = {
-        let button = UIButton()
-        button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
-        button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
-        button.setTitle("Подтвердить", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Mont", size: 20)
-        button.setTitleColor(secondaryColor, for: .normal)
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
-        button.alpha = 0.5
-        button.addTarget(self, action: #selector(beginRegistration), for: .touchUpInside)
-        return button
+        
+        createButton(withTitle: "Далее", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), action: UIAction { _ in
+            self.visuals()
+        })
     }()
     
     lazy var continueButton: UIButton = {
-        let button = UIButton()
-        button.frame = CGRect(x: 20, y: 20, width: 355, height: 60)
-        button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
-        button.backgroundColor = .white
-        button.setTitle("Проодолжить", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Mont", size: 20)
-        button.setTitleColor(secondaryColor, for: .normal)
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
-        button.alpha = 0.5
-        button.addTarget(self, action: #selector(closeVC), for: .touchUpInside)
-        button.isHidden = true
-        return button
+        createButton(withTitle: "На страницу входа", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), action: UIAction { _ in
+            self.backToSignIn()
+        })
     }()
     
+    lazy var finishRegistrationButton: UIButton = {
+        createButton(withTitle: "Finish", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), action: UIAction { _ in
+            self.completeRegistration()
+        })
+    }()
+    
+    //    func setupAllTextFields() {
+    //        let textFields = [emailTextField, nameTextField, loginTextField]
+    //        for textField in textFields {
+    //            textField.textAlignment = .center
+    //            textField.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1)
+    //            textField.font = UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14)
+    //            textField.layer.cornerRadius = 10
+    //        }
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSignUpView()
+        view.backgroundColor = .white
+        setupSubviews(subviews: mainLabel,
+                      emailTextField,
+                      passwordTextField,
+                      beginRegistrationButton,
+                      finishRegistrationButton,
+                      continueButton,
+                      nameTextField,
+                      surnameTextField,
+                      maleTextField,
+                      heightTextField,
+                      weightTextField,
+                      ageTextField)
+        setConstraints()
         textFieldSetup()
         setContinueButton(enabled: false)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
     }
     
-    @objc private func backToSignIn() {
-        dismiss(animated: true)
-        let sivc = UINavigationController(rootViewController: SignInViewController())
-        sivc.view.backgroundColor = .white
-        sivc.modalPresentationStyle = .automatic
-        present(sivc, animated: true)
-    }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector:#selector(keyboardWillAppear),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-    }
-    
     deinit {
         removeKeyboardNotification()
+    }
+    
+    func visuals() {
+        finishRegistrationButton.isHidden = true
+        emailTextField.isHidden = true
+        passwordTextField.isHidden = true
+        nameTextField.isHidden = false
+    }
+    
+    @objc private func backToSignIn() {
+        dismiss(animated: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -130,18 +139,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @objc private func beginRegistration() {
-        fetchUserData()
-    }
-    
     @objc private func textFieldChanged() {
         
         guard
-            let login = loginTextField.text,
-            let email = emailTextField.text
+            let email = emailTextField.text,
+            let password = passwordTextField.text
         else { return }
         
-        let formFilled = !(email.isEmpty) && !(login.isEmpty)
+        let formFilled = !(email.isEmpty) && !(password.isEmpty)
         
         setContinueButton(enabled: formFilled)
     }
@@ -159,69 +164,177 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Core Data
     
-    private func fetchUserData() {
-        if let name = loginTextField.text, let email = emailTextField.text
+    private func fetchEmailAndPassword() {
+        if let password = passwordTextField.text, let email = emailTextField.text
         {
-            if name.isEmpty || email.isEmpty {
+            if password.isEmpty || email.isEmpty {
                 
-                // create the alert
-                showError("Error", "Fill all fields")
+                showError("Error", "Bla-bla")
+            }
+            else {
+                let newUser = User(context: StorageManager.shared.context)
+                newUser.password = password
+                newUser.email = email
+                
+                StorageManager.shared.saveContext()
+                
+                showError("Успех", "Охладите трахание")
+            }
+        }
+    }
+    
+    private func fetchUserData() {
+        if let name = nameTextField.text,
+           let surname = surnameTextField.text,
+           let male = maleTextField.text,
+           let height = heightTextField.text,
+           let weight = weightTextField.text
+        {
+            
+            if name.isEmpty || surname.isEmpty || male.isEmpty || height.isEmpty || weight.isEmpty {
+                
+                showError("Error", "Bla")
             }
             else {
                 let newUser = User(context: StorageManager.shared.context)
                 newUser.name = name
-                newUser.email = email
+                newUser.surname = surname
+                newUser.male = male
+                newUser.weight = weight
+                newUser.height = height
                 
                 StorageManager.shared.saveContext()
-
-                self.toClearAll()
-                beginRegistrationButton.isHidden = true
-                continueButton.isHidden = false
-                emailTextField.isHidden = true
-                loginTextField.isHidden = true
-                let sivc = SignInViewController()
-                self.navigationController?.pushViewController(sivc, animated: true)
-                }
+                
+                showError("Registration complete", "Now you can login with your login and password")
+                
             }
-    }
-    
-    @objc func closeVC() {
-        self.dismiss(animated: true, completion: nil)
-        let sivc = SignInViewController()
-        sivc.modalPresentationStyle = .automatic
-        present(sivc, animated: true)
-    }
-    
-    func validateTextFields ()  -> (String?,String?) {
-        
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
-            
-        {
-            
-            return ("Одно из полей не заполнено","Пожалуйста заполните все поля")
         }
-        return (nil,nil)
     }
     
-    func showError(_ title:String,_ message : String) {
+    // MARK: Registration
+    
+    private func beginRegistration() {
+//        fetchEmailAndPassword()
+        continueRegistration()
+    }
+    
+    private func continueRegistration() {
+//        fetchUserData()
+        self.toClearAll()
+        beginRegistrationButton.isHidden = true
+        finishRegistrationButton.isHidden = true
+        emailTextField.isHidden = true
+        passwordTextField.isHidden = true
+        nameTextField.isHidden = false
+//        let userdataTextFields = [nameTextField, surnameTextField, heightTextField, weightTextField, ageTextField, maleTextField]
+//        for userdataTextField in userdataTextFields {
+//            userdataTextField.isHidden = false
+//        }
+    }
+    
+    private func completeRegistration() {
         
-        self.present(CustomAlert.alertMessage(title, message), animated: true, completion: nil)
-
+        let userdataTextFields = [nameTextField, surnameTextField, heightTextField, weightTextField, ageTextField, maleTextField]
+        for userdataTextField in userdataTextFields {
+            userdataTextField.isHidden = true
+        }
+        fetchUserData()
+        toSignInVC()
+    }
+    
+    private func toSignInVC() {
+        let sivc = SignUpViewController()
+        sivc.view.backgroundColor = .white
+        self.navigationController?.pushViewController(sivc, animated: true)
+    }
+    
+    //    func validateTextFields ()  -> (String?,String?) {
+    //
+    //        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+    //
+    //        {
+    //
+    //            return ("Одно из полей не заполнено","Пожалуйста заполните все поля")
+    //        }
+    //        return (nil,nil)
+    //    }
+    
+    private func showError(_ title:String,_ message : String) {
+        
+        self.present(CustomAlert.alertMessage(title, message), animated: true)
+        
     }
     
     private func toClearAll () {
-        loginTextField.text = ""
+        passwordTextField.text = ""
         emailTextField.text = ""
     }
-
+    
     // MARK: Setup View
     
-    private func setupRegistrationView() {
-        loginTextField.isHidden = true
-        emailTextField.isHidden = true
-        view.addSubview(continueButton)
+    func setupSubviews(subviews: UIView...) {
+        subviews.forEach { subview in
+            view.addSubview(subview)
+        }
     }
     
+    private func setConstraints() {
+        
+        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 336),
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            emailTextField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 42),
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        beginRegistrationButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            beginRegistrationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            beginRegistrationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            beginRegistrationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            beginRegistrationButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            nameTextField.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            nameTextField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+//
+        surnameTextField.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            surnameTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 90),
+            surnameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            surnameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            surnameTextField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+//
+//        finishRegistrationButton.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//            finishRegistrationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+//            finishRegistrationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+//            finishRegistrationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+//            finishRegistrationButton.heightAnchor.constraint(equalToConstant: 60)
+//        ])
+        
+    }
     
     // MARK: Firebase
     
@@ -235,43 +348,31 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 extension SignUpViewController {
     
     private func textFieldSetup() {
-        loginTextField.delegate = self
-        loginTextField.tag = 0
-        loginTextField.returnKeyType = .next
-        loginTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        emailTextField.delegate = self
-        emailTextField.tag = 1
-        emailTextField.returnKeyType = .done
-        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+        let textFields = [passwordTextField, emailTextField]
+        
+        for textField in textFields {
+            textField.delegate = self
+            textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        }
+        
+        textFields.first?.tag = 1
+        textFields.first?.returnKeyType = .done
+        
+        textFields.last?.tag = 0
+        textFields.last?.returnKeyType = .next
+        
         registerKeyboardNotification()
         hideKeyboardWhenTappedAround()
-    }
-    
-    private func setupSignUpView() {
-        view.backgroundColor = .white
-        view.addSubview(beginRegistrationButton)
-        view.addSubview(continueButton)
-        view.addSubview(loginTextField)
-        view.addSubview(emailTextField)
-        view.addSubview(mainLabel)
     }
 }
 
 extension SignUpViewController {
     
-    @objc func keyboardWillAppear(notification: NSNotification){
-        
-        let userInfo = notification.userInfo!
-        let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        
-        continueButton.center = CGPoint(x: view.center.x,
-                                        y: view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField, loginTextField.text != "" {
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField, emailTextField.text != "" {
             nextField.becomeFirstResponder()
-        } else if textField == self.emailTextField {
+        } else if textField == self.passwordTextField {
             textField.resignFirstResponder()
             beginRegistration()
         }
@@ -295,7 +396,8 @@ extension SignUpViewController {
     }
     
     @objc func keyboardWillShow(notification: Notification) {
-        self.view.frame.origin.y = -200
+        //        self.view.frame.origin.y = -200
+        self.beginRegistrationButton.frame.origin.y = 50
         
     }
     

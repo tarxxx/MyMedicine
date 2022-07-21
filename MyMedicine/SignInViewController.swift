@@ -8,7 +8,6 @@
 import UIKit
 import CoreData
 
-
 class SignInViewController: UIViewController, UITextFieldDelegate {
     
     private let context = StorageManager.shared.persistentContainer.viewContext
@@ -19,93 +18,75 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     lazy var emailTextField: UITextField = {
         
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y - 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "mymail@gmail.com")
-        textField.textAlignment = .center
-        
-        textField.backgroundColor = .systemGray6
-        return textField
+        setupTextFields(withPlaceholder: "MyMail@mail.com", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: false)
     }()
     
-    lazy var loginTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         
-        let textField = UITextField()
-        textField.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        textField.center = CGPoint(x: view.center.x, y: view.center.y + 50)
-        textField.layer.cornerRadius = 10
-        textField.attributedPlaceholder = NSAttributedString(string: "Login")
-        textField.textAlignment = .center
-        textField.backgroundColor = .systemGray6
-        return textField
+        setupTextFields(withPlaceholder: "Password", andColor: #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.968627451, alpha: 1), alignment: .center, cornerRadius: 10, andFont: UIFont(name: "Mont", size: 14) ?? UIFont.systemFont(ofSize: 14), hidden: false)
+    }()
+    
+    
+    lazy var loginButton: UIButton = {
+        createButton(withTitle: "Вход", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), action: UIAction { _ in
+            self.toLogin()
+        })
     }()
     
     lazy var toRegister: UIButton = {
-        
-        let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        button.center = CGPoint(x: view.center.x, y: view.center.y + 150)
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
-        button.alpha = 0.5
-        button.addTarget(self, action: #selector(toSignUpVC), for: .touchUpInside)
-        button.setTitle("Регистрация", for: .normal)
-        return button
-    }()
-    
-    lazy var loginButton: UIButton = {
-        
-        let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 355, height: 60)
-        button.center = CGPoint(x: view.center.x, y: view.center.y + 250)
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
-        button.alpha = 1
-        button.addTarget(self, action: #selector(toLogin), for: .touchUpInside)
-        button.setTitle("Вход", for: .normal)
-        
-        return button
+        createButton(withTitle: "Регистрация", andColor: #colorLiteral(red: 0.1411764706, green: 0.4078431373, blue: 0.9647058824, alpha: 1), action: UIAction { _ in
+            self.toSignUpVC()
+        })
     }()
     
     override func viewDidLoad() {
-        setupSignInView()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backToSignIn))
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupSubviews(subviews: emailTextField,
+                      passwordTextField,
+                      toRegister,
+                      loginButton)
+        setConstraints()
+        textFieldSetup()
+        setLoginButton(enabled: false)
+        registerKeyboardNotification()
+        hideKeyboardWhenTappedAround()
         users = StorageManager.shared.fetchUser()
         if (userDefaults.value(forKey: "login") != nil) == true
         {
             toMainVC()
         }
-        
     }
     
-    @objc private func backToSignIn() {
-        
+    deinit {
+        removeKeyboardNotification()
     }
     
-    @objc func toLogin() {
+    func setupSubviews(subviews: UIView...) {
+        subviews.forEach { subview in
+            view.addSubview(subview)
+        }
+    }
+    
+    private func toLogin() {
         
-        if emailTextField.text!.isEmpty || loginTextField.text!.isEmpty{
+        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             
             showError("Error", "Fill all fields")
         }
         
         for user in users {
-            if emailTextField.text == user.email && loginTextField.text == user.name
+            if emailTextField.text == user.email && passwordTextField.text == user.password
             {
                 login = true
-                
-                userDefaults.setValue(user.name, forKey: "name")
-                userDefaults.setValue(user.email, forKey: "email")
+                userDefaults.setValue(user.email, forKey: "name")
+                userDefaults.setValue(user.password, forKey: "email")
                 userDefaults.setValue(true, forKey: "login")
                 toMainVC()
-                
             }
         }
         
         if login == false {
-            
             showError("Ошибка", "Есои у Вас нет учетной записи, пожалуйста зарегистрируйтесь")
             toClearAll()
         }
@@ -114,34 +95,147 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     func showError(_ title:String,_ message : String) {
         
         self.present(CustomAlert.alertMessage(title, message), animated: true, completion: nil)
-        
     }
     
     private func toClearAll () {
-        loginTextField.text = ""
         emailTextField.text = ""
+        passwordTextField.text = ""
     }
     
-    @objc func toSignUpVC() {
-        let svc = UINavigationController(rootViewController: SignUpViewController())
+    private func toSignUpVC() {
+        let svc = SignUpViewController()
         svc.view.backgroundColor = .white
-        svc.modalPresentationStyle = .automatic
-        present(svc, animated: true)
+        self.navigationController?.pushViewController(svc, animated: true)
     }
     
     private func toMainVC() {
-        //      dismiss(animated: true)
-        let mvc = UINavigationController(rootViewController: MainViewController())
-        mvc.modalPresentationStyle = .fullScreen
-        present(mvc, animated: true)
+        let mvc = MainViewController()
+        self.navigationController?.pushViewController(mvc, animated: true)
     }
     
-    private func setupSignInView() {
-        view.backgroundColor = .white
-        view.addSubview(emailTextField)
-        view.addSubview(loginTextField)
-        view.addSubview(toRegister)
-        view.addSubview(loginButton)
+
+    private func setConstraints() {
+        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 336),
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            emailTextField.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 42),
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 60)
+            
+        ])
+        
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            loginButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        toRegister.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            toRegister.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -30),
+            toRegister.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            toRegister.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            toRegister.heightAnchor.constraint(equalToConstant: 60)
+        ])
     }
 }
+
+extension SignInViewController {
+    
+    private func textFieldSetup() {
+        
+        let textFields = [emailTextField, passwordTextField ]
+        
+        for textField in textFields {
+            textField.delegate = self
+            textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        }
+        
+        textFields.first?.tag = 0
+        textFields.first?.returnKeyType = .next
+        
+        textFields.last?.tag = 1
+        textFields.last?.returnKeyType = .done
+        
+        registerKeyboardNotification()
+        hideKeyboardWhenTappedAround()
+    }
+    
+    @objc private func textFieldChanged() {
+        
+        guard
+            let email = emailTextField.text,
+            let password = passwordTextField.text
+        else { return }
+        
+        let formFilled = !(email.isEmpty) && !(password.isEmpty)
+        
+        setLoginButton(enabled: formFilled)
+    }
+    
+    private func setLoginButton(enabled:Bool) {
+        
+        if enabled {
+            loginButton.alpha = 1.0
+            loginButton.isEnabled = true
+        } else {
+            loginButton.alpha = 0.9
+            loginButton.isEnabled = false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField, emailTextField.text != "" {
+            nextField.becomeFirstResponder()
+        } else if textField == self.passwordTextField {
+            textField.resignFirstResponder()
+            
+        }
+        return true
+    }
+    
+    func registerKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        self.view.frame.origin.y = -250
+        
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
 
