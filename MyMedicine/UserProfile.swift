@@ -6,13 +6,21 @@
 //
 
 import Foundation
+import CoreData
 
-struct User {
-    
-    var phone = ""
-    var email = ""
-    var password = ""
+//struct User {
+//
+//    var login = ""
+//    var email = ""
+//    var password = ""
+//
+//}
+
+//let user = UserDefaults.standard
+
+@objc(User)
+public class User: NSManagedObject {
     
 }
 
-//let user = UserDefaults.standard
+

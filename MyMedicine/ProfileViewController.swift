@@ -11,10 +11,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-   
-    
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         
         
